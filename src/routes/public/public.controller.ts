@@ -19,6 +19,7 @@ export class PublicController {
         const ambulance = req.body.ambulance;
         const medicine = req.body.medicine;
         const beds = req.body.beds;
+        const icuBeds = req.body.icuBeds;
         const food = req.body.food;
         const others = req.body.others;
         const additionalDetails = req.body.additionalDetails;
@@ -48,6 +49,7 @@ export class PublicController {
                     ambulance,
                     medicine,
                     beds,
+                    icuBeds,
                     food,
                     others,
                     additionalDetails
@@ -65,10 +67,10 @@ export class PublicController {
         }
     }
 
-    public static getHelp = async(req: AuthenticatedRequest, res: Response) => {
+    public static getHelp = async (req: AuthenticatedRequest, res: Response) => {
         let response: ResponseObject<any>;
 
-        try{
+        try {
             const helps = await GetHelpPost.find();
             response = {
                 ResponseData: helps.reverse(),
@@ -76,7 +78,7 @@ export class PublicController {
             }
             return res.send(response);
         }
-        catch(error){
+        catch (error) {
             console.log(error);
             return res.status(500).end();
         }
@@ -164,13 +166,14 @@ export class PublicController {
     public static getContribution = async (req: AuthenticatedRequest, res: Response) => {
         const pincode = req.body.pincode;
         console.log(req.body.bloodPlasma)
-        const bloodPlasma = false || req.body.bloodPlasma ;
-        const oxygen =  false ||  req.body.oxygen;
-        const ambulance = false ||  req.body.ambulance;
-        const medicine = false ||  req.body.medicine;
-        const beds = false ||  req.body.beds;
-        const food = false ||  req.body.food;
-        const others = false ||  req.body.others;
+        const bloodPlasma = false || req.body.bloodPlasma;
+        const oxygen = false || req.body.oxygen;
+        const ambulance = false || req.body.ambulance;
+        const medicine = false || req.body.medicine;
+        const beds = false || req.body.beds;
+        const icuBeds = false || req.body.icuBeds;
+        const food = false || req.body.food;
+        const others = false || req.body.others;
 
         let response: ResponseObject<any>;
 
@@ -179,8 +182,8 @@ export class PublicController {
             res.status(400).send({ msg: 'Invalid Pincode' });
         }
         else {
-            const keys = ['bloodPlasma', 'oxygen', 'ambulance', 'medicine', 'beds', 'food', 'others'];
-            const values = [bloodPlasma, oxygen, ambulance, medicine, beds, food, others];
+            const keys = ['bloodPlasma', 'oxygen', 'ambulance', 'medicine', 'beds', 'icuBeds', 'food', 'others'];
+            const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
             const region = pincodeDetails.ResponseData.Region;
             let query: Array<any> = []
             keys.forEach((ele: any, index) => {
