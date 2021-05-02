@@ -165,7 +165,6 @@ export class PublicController {
 
     public static getContribution = async (req: AuthenticatedRequest, res: Response) => {
         const pincode = req.body.pincode;
-        console.log(req.body.bloodPlasma)
         const bloodPlasma = false || req.body.bloodPlasma;
         const oxygen = false || req.body.oxygen;
         const ambulance = false || req.body.ambulance;
