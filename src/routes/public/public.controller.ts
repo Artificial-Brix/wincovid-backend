@@ -185,7 +185,7 @@ export class PublicController {
         else {
             const keys = ['bloodPlasma', 'oxygen', 'ambulance', 'medicine', 'beds', 'icuBeds', 'food', 'others'];
             const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
-            const region = pincodeDetails.ResponseData.Region;
+            const district = pincodeDetails.ResponseData.District;
             let query: Array<any> = []
             keys.forEach((ele: any, index) => {
                 if (values[index]) {
@@ -199,7 +199,7 @@ export class PublicController {
                             $or: query
                         },
                         {
-                            "region": region,
+                            "district": district,
                         }
                     ]
                 })
