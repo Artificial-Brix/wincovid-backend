@@ -121,7 +121,7 @@ export class PublicController {
                 ambulance,
                 medicine,
                 beds,
-                icuBeds
+                icuBeds,
                 food,
                 others,
                 additionalDetails,
