@@ -93,6 +93,7 @@ export class PublicController {
         const ambulance = req.body.ambulance;
         const medicine = req.body.medicine;
         const beds = req.body.beds;
+        const icuBeds = req.body.icuBeds;
         const food = req.body.food;
         const others = req.body.others;
         const additionalDetails = req.body.additionalDetails;
@@ -120,6 +121,7 @@ export class PublicController {
                 ambulance,
                 medicine,
                 beds,
+                icuBeds
                 food,
                 others,
                 additionalDetails,

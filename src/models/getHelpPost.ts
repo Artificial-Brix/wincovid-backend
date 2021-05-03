@@ -43,6 +43,10 @@ const GetHelpPostSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    icuBeds: {
+        type: Boolean,
+        default: false,
+    },
     food: {
         type: Boolean,
         default: false,
