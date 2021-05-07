@@ -14,12 +14,24 @@ export class PublicController {
         const name = req.body.name;
         const phone = req.body.phone;
         const pincode = req.body.pincode;
-        const bloodPlasma = req.body.bloodPlasma;
-        const oxygen = req.body.oxygen;
-        const ambulance = req.body.ambulance;
-        const medicine = req.body.medicine;
-        const beds = req.body.beds;
-        const icuBeds = req.body.icuBeds;
+        const aPositive = req.body.aPositive;
+        const aNegative = req.body.aNegative;
+        const bPositive = req.body.bPositive;
+        const bNegative = req.body.bNegative;
+        const abPositive = req.body.abPositive;
+        const abNegative = req.body.abNegative;
+        const oPositive = req.body.oPositive;
+        const oNegative = req.body.oNegative;
+        const oxygenCylinder = req.body.oxygenCylinder;
+        const oxygenRefiling = req.body.oxygenRefiling;
+        const covidAmbulance = req.body.covidAmbulance;
+        const nonCovidAmbulance = req.body.nonCovidAmbulance;
+        const covidMedicine = req.body.covidMedicine;
+        const nonCovidMedicine = req.body.nonCovidMedicine;
+        const covidBeds = req.body.covidBeds;
+        const nonCovidBeds = req.body.nonCovidBeds;
+        const covidICUBeds = req.body.covidICUBeds;
+        const nonCovidICUBeds = req.body.nonCovidICUBeds;
         const food = req.body.food;
         const others = req.body.others;
         const additionalDetails = req.body.additionalDetails;
@@ -34,7 +46,6 @@ export class PublicController {
             }
             else {
                 const district = pincodeDetails.ResponseData.District
-                const region = pincodeDetails.ResponseData.Region
                 const state = pincodeDetails.ResponseData.State
 
                 const contributor = await ContributorPost.create({
@@ -42,14 +53,25 @@ export class PublicController {
                     phone,
                     pincode,
                     district,
-                    region,
                     state,
-                    bloodPlasma,
-                    oxygen,
-                    ambulance,
-                    medicine,
-                    beds,
-                    icuBeds,
+                    aPositive,
+                    aNegative,
+                    bPositive,
+                    bNegative,
+                    abPositive,
+                    abNegative,
+                    oPositive,
+                    oNegative,
+                    oxygenCylinder,
+                    oxygenRefiling,
+                    covidAmbulance,
+                    nonCovidAmbulance,
+                    covidMedicine,
+                    nonCovidMedicine,
+                    covidBeds,
+                    nonCovidBeds,
+                    covidICUBeds,
+                    nonCovidICUBeds,
                     food,
                     others,
                     additionalDetails
@@ -67,20 +89,108 @@ export class PublicController {
         }
     }
 
-    public static getHelp = async (req: AuthenticatedRequest, res: Response) => {
+    public static getContribution = async (req: AuthenticatedRequest, res: Response) => {
+        const pincode = req.body.pincode;
+        const aPositive = false || req.body.aPositive;
+        const aNegative = false || req.body.aNegative;
+        const bPositive = false || req.body.bPositive;
+        const bNegative = false || req.body.bNegative;
+        const abPositive = false || req.body.abPositive;
+        const abNegative = false || req.body.abNegative;
+        const oPositive = false || req.body.oPositive;
+        const oNegative = false || req.body.oNegative;
+        const oxygenCylinder = false || req.body.oxygenCylinder;
+        const oxygenRefiling = false || req.body.oxygenRefiling;
+        const covidAmbulance = false || req.body.covidAmbulance;
+        const nonCovidAmbulance = false || req.body.nonCovidAmbulance;
+        const covidMedicine = false || req.body.covidMedicine;
+        const nonCovidMedicine = false || req.body.nonCovidMedicine;
+        const covidBeds = false || req.body.covidBeds;
+        const nonCovidBeds = false || req.body.nonCovidBeds;
+        const covidICUBeds = false || req.body.covidICUBeds;
+        const nonCovidICUBeds = false || req.body.nonCovidICUBeds;
+        const food = false || req.body.food;
+        const others = false || req.body.others;
+
         let response: ResponseObject<any>;
 
-        try {
-            const helps = await GetHelpPost.find();
-            response = {
-                ResponseData: helps.reverse(),
-                ResponseMessage: 'Helps fetched',
-            }
-            return res.send(response);
+        const pincodeDetails = await GetDetailsByPincode(pincode);
+        if (!pincodeDetails.ResponseData) {
+            res.status(400).send({ msg: 'Invalid Pincode' });
         }
-        catch (error) {
-            console.log(error);
-            return res.status(500).end();
+        else {
+            const keys = [
+                'aPositive',
+                'aNegative',
+                'bPositive',
+                'bNegative',
+                'abPositive',
+                'abNegative',
+                'oPositive',
+                'oNegative',
+                'oxygenCylinder',
+                'oxygenRefiling',
+                'covidAmbulance',
+                'nonCovidAmbulance',
+                'covidMedicine',
+                'nonCovidMedicine',
+                'covidBeds',
+                'nonCovidBeds',
+                'covidICUBeds',
+                'nonCovidICUBeds', 
+                'food', 
+                'others'
+            ];
+            const values = [
+                aPositive,
+                aNegative,
+                bPositive,
+                bNegative,
+                abPositive,
+                abNegative,
+                oPositive,
+                oNegative,
+                oxygenCylinder,
+                oxygenRefiling,
+                covidAmbulance,
+                nonCovidAmbulance,
+                covidMedicine,
+                nonCovidMedicine,
+                covidBeds,
+                nonCovidBeds,
+                covidICUBeds,
+                nonCovidICUBeds, 
+                food, 
+                others
+            ];
+            const district = pincodeDetails.ResponseData.District;
+            let query: Array<any> = []
+            keys.forEach((ele: any, index) => {
+                if (values[index]) {
+                    query.push({ [keys[index]]: true })
+                }
+            });
+            try {
+                const contributions = await ContributorPost.find({
+                    $and: [
+                        {
+                            $or: query
+                        },
+                        {
+                            "district": district,
+                        }
+                    ]
+                })
+                // .countDocuments();   // Don't remove or touch here.
+                response = {
+                    ResponseData: contributions.reverse(),
+                    ResponseMessage: 'Got Results',
+                }
+                return res.send(response);
+            } catch (error) {
+                console.log(error);
+                return res.status(500).end();
+            }
         }
     }
 
@@ -88,12 +198,24 @@ export class PublicController {
         const name = req.body.name;
         const phone = req.body.phone;
         const pincode = req.body.pincode;
-        const bloodPlasma = req.body.bloodPlasma;
-        const oxygen = req.body.oxygen;
-        const ambulance = req.body.ambulance;
-        const medicine = req.body.medicine;
-        const beds = req.body.beds;
-        const icuBeds = req.body.icuBeds;
+        const aPositive = req.body.aPositive;
+        const aNegative = req.body.aNegative;
+        const bPositive = req.body.bPositive;
+        const bNegative = req.body.bNegative;
+        const abPositive = req.body.abPositive;
+        const abNegative = req.body.abNegative;
+        const oPositive = req.body.oPositive;
+        const oNegative = req.body.oNegative;
+        const oxygenCylinder = req.body.oxygenCylinder;
+        const oxygenRefiling = req.body.oxygenRefiling;
+        const covidAmbulance = req.body.covidAmbulance;
+        const nonCovidAmbulance = req.body.nonCovidAmbulance;
+        const covidMedicine = req.body.covidMedicine;
+        const nonCovidMedicine = req.body.nonCovidMedicine;
+        const covidBeds = req.body.covidBeds;
+        const nonCovidBeds = req.body.nonCovidBeds;
+        const covidICUBeds = req.body.covidICUBeds;
+        const nonCovidICUBeds = req.body.nonCovidICUBeds;
         const food = req.body.food;
         const others = req.body.others;
         const additionalDetails = req.body.additionalDetails;
@@ -106,7 +228,6 @@ export class PublicController {
                 res.status(400).send({ msg: 'Invalid Pincode' });
             }
             const district = pincodeDetails.ResponseData.District
-            const region = pincodeDetails.ResponseData.Region
             const state = pincodeDetails.ResponseData.State
 
             const post = await GetHelpPost.create({
@@ -114,17 +235,28 @@ export class PublicController {
                 phone,
                 pincode,
                 district,
-                region,
                 state,
-                bloodPlasma,
-                oxygen,
-                ambulance,
-                medicine,
-                beds,
-                icuBeds,
+                aPositive,
+                aNegative,
+                bPositive,
+                bNegative,
+                abPositive,
+                abNegative,
+                oPositive,
+                oNegative,
+                oxygenCylinder,
+                oxygenRefiling,
+                covidAmbulance,
+                nonCovidAmbulance,
+                covidMedicine,
+                nonCovidMedicine,
+                covidBeds,
+                nonCovidBeds,
+                covidICUBeds,
+                nonCovidICUBeds,
                 food,
                 others,
-                additionalDetails,
+                additionalDetails
             });
             response = {
                 ResponseData: post,
@@ -164,57 +296,24 @@ export class PublicController {
             return res.status(500).end();
         }
     }
-
-    public static getContribution = async (req: AuthenticatedRequest, res: Response) => {
-        const pincode = req.body.pincode;
-        const bloodPlasma = false || req.body.bloodPlasma;
-        const oxygen = false || req.body.oxygen;
-        const ambulance = false || req.body.ambulance;
-        const medicine = false || req.body.medicine;
-        const beds = false || req.body.beds;
-        const icuBeds = false || req.body.icuBeds;
-        const food = false || req.body.food;
-        const others = false || req.body.others;
-
+    public static getHelp = async (req: AuthenticatedRequest, res: Response) => {
         let response: ResponseObject<any>;
 
-        const pincodeDetails = await GetDetailsByPincode(pincode);
-        if (!pincodeDetails.ResponseData) {
-            res.status(400).send({ msg: 'Invalid Pincode' });
-        }
-        else {
-            const keys = ['bloodPlasma', 'oxygen', 'ambulance', 'medicine', 'beds', 'icuBeds', 'food', 'others'];
-            const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
-            const district = pincodeDetails.ResponseData.District;
-            let query: Array<any> = []
-            keys.forEach((ele: any, index) => {
-                if (values[index]) {
-                    query.push({ [keys[index]]: true })
-                }
-            });
-            try {
-                const contributions = await ContributorPost.find({
-                    $and: [
-                        {
-                            $or: query
-                        },
-                        {
-                            "district": district,
-                        }
-                    ]
-                })
-                // .countDocuments();   // Don't remove or touch here.
-                response = {
-                    ResponseData: contributions.reverse(),
-                    ResponseMessage: 'Got Results',
-                }
-                return res.send(response);
-            } catch (error) {
-                console.log(error);
-                return res.status(500).end();
+        try {
+            const helps = await GetHelpPost.find();
+            response = {
+                ResponseData: helps.reverse(),
+                ResponseMessage: 'Helps fetched',
             }
+            return res.send(response);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(500).end();
         }
     }
+
+    
 }
 
 

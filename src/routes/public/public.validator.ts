@@ -17,9 +17,26 @@ class PublicValidator {
                 },
                 phone: {
                     in: ['body'],
-                    isInt: true,
                     exists: true,
-                    errorMessage: 'Phone is missing',
+                    trim: true,
+                    errorMessage: 'Phone number is missing',
+                    isEmpty: {
+                        negated: true,
+                        errorMessage: 'Phone number should not be empty'
+                    },
+                    isLength: {
+                        options: {
+                          min: 10,
+                          max: 12,
+                        },
+                        errorMessage: 'Phone number should be 10 digit',
+                      },
+                      isNumeric: {
+                        errorMessage: 'Invalid Phone number, no symbols like +,-./ etc',
+                        options: {
+                          no_symbols: true,
+                        },
+                      },
                 },
                 pincode: {
                     in: ['body'],
@@ -48,15 +65,38 @@ class PublicValidator {
                 },
                 email: {
                     in: ['body'],
-                    isEmail: true,
                     exists: true,
-                    errorMessage: 'Email is missing',
+                    errorMessage: 'Email ID is missing',
+                    isEmpty: {
+                        negated: true,
+                        errorMessage: 'Email ID should not be empty'
+                    },
+                    isEmail: {
+                        errorMessage: 'Invalid Email ID',
+                    },
                 },
                 phone: {
                     in: ['body'],
-                    isInt: true,
                     exists: true,
-                    errorMessage: 'Phone is missing',
+                    trim: true,
+                    errorMessage: 'Phone number is missing',
+                    isEmpty: {
+                        negated: true,
+                        errorMessage: 'Phone number should not be empty'
+                    },
+                    isLength: {
+                        options: {
+                          min: 10,
+                          max: 12,
+                        },
+                        errorMessage: 'Phone number should be 10 digit',
+                      },
+                      isNumeric: {
+                        errorMessage: 'Invalid Phone number, no symbols like +,-./ etc',
+                        options: {
+                          no_symbols: true,
+                        },
+                      },
                 },
                 message: {
                     in: ['body'],

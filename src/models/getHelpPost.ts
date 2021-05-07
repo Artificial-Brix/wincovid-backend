@@ -16,34 +16,81 @@ const GetHelpPostSchema = new Schema({
     },
     district: {
         type: String,
-    },
-    region: {
-        type: String,
+        required: true,
     },
     state: {
         type: String,
+        required: true,
     },
-    bloodPlasma: {
+    abPositive: {
         type: Boolean,
         default: false,
     },
-    oxygen: {
+    abNegative: {
         type: Boolean,
         default: false,
     },
-    ambulance: {
+    aPositive: {
         type: Boolean,
         default: false,
     },
-    medicine: {
+    aNegative: {
         type: Boolean,
         default: false,
     },
-    beds: {
+    bPositive: {
         type: Boolean,
         default: false,
     },
-    icuBeds: {
+    bNegative: {
+        type: Boolean,
+        default: false,
+    },
+    oPositive: {
+        type: Boolean,
+        default: false,
+    },
+    oNegative: {
+        type: Boolean,
+        default: false,
+    },
+    oxygenCylinder: {
+        type: Boolean,
+        default: false,
+    },
+    oxygenRefiling: {
+        type: Boolean,
+        default: false,
+    },
+    covidAmbulance: {
+        type: Boolean,
+        default: false,
+    },
+    nonCovidAmbulance: {
+        type: Boolean,
+        default: false,
+    },
+    covidMedicine: {
+        type: Boolean,
+        default: false,
+    },
+    nonCovidMedicine: {
+        type: Boolean,
+        default: false,
+    },
+    covidBeds: {
+        type: Boolean,
+        default: false,
+    },
+    nonCovidBeds: {
+        type: Boolean,
+        default: false,
+    },
+    covidICUBeds: {
+        type: Boolean,
+        default: false,
+    },
+    nonCovidICUBeds: {
         type: Boolean,
         default: false,
     },
