@@ -71,7 +71,7 @@ class App {
 
     private routes() {
         this.app.get('/', (req: Request, res: Response, next: NextFunction) => {
-            res.send('Back end API, you no need to bother');
+            res.send('Wincovid Backend APIs');
         });
         this.app.use('/api/v1', this.apiV1Routes);
         this.apiV1Routes.use('/', PublicRouter)
