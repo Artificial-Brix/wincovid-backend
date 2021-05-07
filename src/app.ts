@@ -23,12 +23,12 @@ class App {
     }
 
     public createDBConnection() {
-        mongoose.connect(process.env.MONGODB_URI_DEV,
+        mongoose.connect(process.env.MONGODB_URI_PROD,
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
                 useFindAndModify: true,
-                poolSize: Number(process.env.MONGODB_POOLSIZE_DEV),
+                poolSize: Number(process.env.MONGODB_POOLSIZE_PROD),
                 keepAlive: true,
             }, () => {
                 console.log(`Connected to Database ...`);
