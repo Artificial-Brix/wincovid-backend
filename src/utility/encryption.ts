@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
+const dotenv = require('dotenv');
+dotenv.config();
 
-const SECRET = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJOYW1lIjoiQWJoaWppdCBNdWtoZXJqZWUiLCJFbWFpbCI6ImFiaGlqaXRAZ21haWwuY29tIiwiSXNFbWFpbFZlcmlmaWVkIjpmYWxzZSwiSXNQcmVtaXVtTWVtYmVyIjpmYWxzZSwiQ3JlYXRlZE9uIjoiMjAyMC0wMS0yOVQxMjo1NTowMC4zMDNaIiwiaWF0IjoxNTgwMzA1MjE5fQGtqRRRLJMoI87k9Kee5Hv8pDszXOEnFZBJWt5VQdAA';
+const SECRET = process.env.SECRET;
 
 class Encryption {
   constructor() {

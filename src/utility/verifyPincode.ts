@@ -4,7 +4,7 @@ import { NextFunction, Response } from "express";
 const dotenv = require('dotenv');
 dotenv.config();
 
-export class GeneralUtility {
+export class VerifyPincode {
 
     constructor() { }
 
@@ -36,7 +36,7 @@ export class GeneralUtility {
 
 }
 
-const GetDetailsByPincode = GeneralUtility.getDetailsByPincode;
+const GetDetailsByPincode = VerifyPincode.getDetailsByPincode;
 export {
     GetDetailsByPincode,
 }

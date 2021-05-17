@@ -1,7 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import { Contribution } from '../interfaces';
 const { Schema } = mongoose;
 
 const ContributionSchema = new Schema({
+    userId: {
+        type: String,
+        required: true,
+    },
+    userName: {
+        type: String,
+        required: true,
+    },
+    userEmail: {
+        type: String,
+        required: true,
+    },
     name: {
         type: String,
         required: true,
@@ -22,75 +35,27 @@ const ContributionSchema = new Schema({
         type: String,
         required: true,
     },
-    abPositive: {
+    bloodPlasma: {
         type: Boolean,
         default: false,
     },
-    abNegative: {
+    oxygen: {
         type: Boolean,
         default: false,
     },
-    aPositive: {
+    ambulance: {
         type: Boolean,
         default: false,
     },
-    aNegative: {
+    medicine: {
         type: Boolean,
         default: false,
     },
-    bPositive: {
+    beds: {
         type: Boolean,
         default: false,
     },
-    bNegative: {
-        type: Boolean,
-        default: false,
-    },
-    oPositive: {
-        type: Boolean,
-        default: false,
-    },
-    oNegative: {
-        type: Boolean,
-        default: false,
-    },
-    oxygenCylinder: {
-        type: Boolean,
-        default: false,
-    },
-    oxygenRefiling: {
-        type: Boolean,
-        default: false,
-    },
-    covidAmbulance: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidAmbulance: {
-        type: Boolean,
-        default: false,
-    },
-    covidMedicine: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidMedicine: {
-        type: Boolean,
-        default: false,
-    },
-    covidBeds: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidBeds: {
-        type: Boolean,
-        default: false,
-    },
-    covidICUBeds: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidICUBeds: {
+    icuBeds: {
         type: Boolean,
         default: false,
     },
@@ -104,7 +69,6 @@ const ContributionSchema = new Schema({
     },
     additionalDetails: {
         type: String,
-        required: true,
     },
     createdOn: {
         type: Date,
@@ -112,6 +76,6 @@ const ContributionSchema = new Schema({
     }
 })
 
-const ContributorPost = mongoose.model('contributions', ContributionSchema);
+const ContributorPost: Model<Contribution> = mongoose.model('contributions', ContributionSchema);
 
 export { ContributorPost };

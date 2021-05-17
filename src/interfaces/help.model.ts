@@ -1,4 +1,6 @@
-interface Contributor {
+import { Document } from 'mongoose';
+
+interface Help extends Document {
     name: string,
     email: string,
     phoneNo: string | number,
@@ -9,4 +11,4 @@ interface Contributor {
     state: string,
 }
 
-export { Contributor };
+export { Help };

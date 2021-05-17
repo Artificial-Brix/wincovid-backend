@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import { Help } from '../interfaces';
 const { Schema } = mongoose;
 
 const GetHelpPostSchema = new Schema({
@@ -16,81 +17,34 @@ const GetHelpPostSchema = new Schema({
     },
     district: {
         type: String,
-        required: true,
+    },
+    region: {
+        type: String,
     },
     state: {
         type: String,
-        required: true,
     },
-    abPositive: {
+    bloodPlasma: {
         type: Boolean,
         default: false,
     },
-    abNegative: {
+    oxygen: {
         type: Boolean,
         default: false,
     },
-    aPositive: {
+    ambulance: {
         type: Boolean,
         default: false,
     },
-    aNegative: {
+    medicine: {
         type: Boolean,
         default: false,
     },
-    bPositive: {
+    beds: {
         type: Boolean,
         default: false,
     },
-    bNegative: {
-        type: Boolean,
-        default: false,
-    },
-    oPositive: {
-        type: Boolean,
-        default: false,
-    },
-    oNegative: {
-        type: Boolean,
-        default: false,
-    },
-    oxygenCylinder: {
-        type: Boolean,
-        default: false,
-    },
-    oxygenRefiling: {
-        type: Boolean,
-        default: false,
-    },
-    covidAmbulance: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidAmbulance: {
-        type: Boolean,
-        default: false,
-    },
-    covidMedicine: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidMedicine: {
-        type: Boolean,
-        default: false,
-    },
-    covidBeds: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidBeds: {
-        type: Boolean,
-        default: false,
-    },
-    covidICUBeds: {
-        type: Boolean,
-        default: false,
-    },
-    nonCovidICUBeds: {
+    icuBeds: {
         type: Boolean,
         default: false,
     },
@@ -112,6 +66,6 @@ const GetHelpPostSchema = new Schema({
     }
 })
 
-const GetHelpPost = mongoose.model('need-help', GetHelpPostSchema);
+const GetHelpPost: Model<Help> = mongoose.model('need-help', GetHelpPostSchema);
 
 export { GetHelpPost };

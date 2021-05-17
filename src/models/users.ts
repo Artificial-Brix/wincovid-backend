@@ -1,8 +1,8 @@
 import mongoose, { Model } from 'mongoose';
-import { Contact } from '../interfaces';
+import { User } from '../interfaces';
 const { Schema } = mongoose;
 
-const ContactSchema = new Schema({
+const UserSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -10,14 +10,20 @@ const ContactSchema = new Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
     },
     phone: {
         type: Number,
         required: true,
+        unique: true,
     },
-    message: {
+    password: {
         type: String,
-        required: true
+        required: true,
+    },
+    role:{
+        type: String,
+        required: true,
     },
     createdOn: {
         type: Date,
@@ -25,6 +31,6 @@ const ContactSchema = new Schema({
     },
 })
 
-const Contacts: Model<Contact> = mongoose.model('contact', ContactSchema);
+const Users: Model<User> = mongoose.model('users', UserSchema);
 
-export { Contacts };
+export { Users };

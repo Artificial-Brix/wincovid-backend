@@ -1,21 +1,21 @@
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 import cors from 'cors';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import express, { NextFunction, Response, Request } from 'express';
-import { PublicRouter } from './routes';
+import { AdminRouter, PublicRouter } from './routes';
+import { DefaultAdminUser } from './utility/defaultAdmin';
 const dotenv = require('dotenv');
 dotenv.config();
 
 class App {
     public app: express.Application;
-    public apiV1Routes: express.Router;
+    public apiV2Routes: express.Router;
 
     constructor() {
         this.app = express();
-        this.apiV1Routes = express.Router();
+        this.apiV2Routes = express.Router();
         this.initializeMiddlewares();
         this.initializeLogger();
         this.initializeErrorHandling();
@@ -28,11 +28,15 @@ class App {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
                 useFindAndModify: true,
-                poolSize: Number(process.env.MONGODB_POOLSIZE_PROD),
+                useCreateIndex: true,
+                poolSize: Number(process.env.MONGODB_POOLSIZE_DEV),
                 keepAlive: true,
-            }, () => {
-                console.log(`Connected to Database ...`);
-            });
+            }).then(() => {
+                console.log('Connected to Database ...')
+                DefaultAdminUser.createDefaultAdminUser().then(() => {
+                    console.log('Default Admin User created ...');
+                }).catch(error => console.log(error))
+            }).catch(error => console.log(error));
     }
 
     public listen() {
@@ -71,10 +75,11 @@ class App {
 
     private routes() {
         this.app.get('/', (req: Request, res: Response, next: NextFunction) => {
-            res.send('Wincovid Backend APIs');
+            res.send('Back end API, you no need to bother');
         });
-        this.app.use('/api/v1', this.apiV1Routes);
-        this.apiV1Routes.use('/', PublicRouter)
+        this.app.use('/api/v2', this.apiV2Routes);
+        this.apiV2Routes.use('/', PublicRouter);
+        this.apiV2Routes.use('/admin', AdminRouter);
     }
 }
 
