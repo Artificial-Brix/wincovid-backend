@@ -29,7 +29,7 @@ class App {
                 useUnifiedTopology: true,
                 useFindAndModify: true,
                 useCreateIndex: true,
-                poolSize: Number(process.env.MONGODB_POOLSIZE_DEV),
+                poolSize: Number(process.env.MONGODB_POOLSIZE_PROD),
                 keepAlive: true,
             }).then(() => {
                 console.log('Connected to Database ...')
