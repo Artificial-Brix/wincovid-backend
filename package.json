@@ -5,13 +5,13 @@
   "engines": {
     "node": "12.16.3"
   },
-  "main": "src/server.ts",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "buildWatch": "tsc -w",
     "dev": "ts-node ./src/server.ts",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "start": "nodemon"
+    "start": "node /dist/server.js"
   },
   "author": "Trishnangshu Goswami and Udaya",
   "license": "ISC",
